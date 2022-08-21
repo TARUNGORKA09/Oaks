@@ -8,7 +8,7 @@ var zlib          = require('zlib');
 
 Logger.options = {
   name: 'request_logs',
-  filename: config.get('logFiles.requestLogspath'),
+  filename: "",
   datePattern: '.dd-MM-yyyy'
 };
 
@@ -25,7 +25,7 @@ Logger.requestFormat = {
 
 Logger.winstonRotateObj = new winstonRotate(Logger.options);
 Logger.transports = [Logger.winstonRotateObj];
-Logger.winstonLogger = new winston.Logger({ transports: Logger.transports });
+//Logger.winstonLogger = new winston.Logger({ transports: Logger.transports });
 
 
 

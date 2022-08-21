@@ -1,6 +1,3 @@
-/**
- * Author : Shubham Singh Negi
- */
 
 const constants   = require('../properties/constants');
 const zlib        = require('zlib');

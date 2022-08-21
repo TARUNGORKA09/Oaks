@@ -8,7 +8,7 @@ const errorhandler = require('errorhandler');
 const cors         = require('cors');
 
 const utilityService = require('./../properties/envProperties');
-//const requestLogger  = require('./../logging/request_logs');
+const requestLogger  = require('./../logging/request_logs');
 
 if (utilityService.isEnvLiveOrBeta()) {
   require('./../libs/newrelic');
@@ -26,7 +26,7 @@ app.use(function (error, req, res, next) {
 });
 app.use(logger('dev'));
 app.use(cors());
-//app.use(requestLogger.create());
+app.use(requestLogger.create());
 
 if ('development' == app.get('env')) {
   app.use(errorhandler());

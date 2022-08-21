@@ -1,6 +1,6 @@
 const http        = require('http');
 const request     = require('request').defaults({strictSSL : false});
-//const logging     = require('../logging/logging')
+const logging     = require('../logging/logging')
 exports.startHttpServer = startHttpServer;
 exports.sendHttpRequest                         = sendHttpRequest;
 
@@ -20,11 +20,11 @@ function sendHttpRequest(apiReference, options) {
     request(options, (error, response, body) => {
       
       if (error) {
-        // logging.logError(apiReference, {
-        //     EVENT : 'Error from external server', OPTIONS : options, ERROR: error,
-        //     RESPONSE : response, BODY: body
-        //   }
-        // );
+        logging.logError(apiReference, {
+            EVENT : 'Error from external server', OPTIONS : options, ERROR: error,
+            RESPONSE : response, BODY: body
+          }
+        );
         return reject(error);
       }
       if (response == undefined) {
@@ -35,18 +35,18 @@ function sendHttpRequest(apiReference, options) {
         error      = new Error('Couldn\'t request with external server ');
         error.code = response.statusCode;
         error.body = response.body;
-        // logging.logError(apiReference, {
-        //     EVENT : 'Error from external server', OPTIONS : options, ERROR: error,
-        //     RESPONSE : response, BODY : body
-        //   }
-        // );
+        logging.logError(apiReference, {
+            EVENT : 'Error from external server', OPTIONS : options, ERROR: error,
+            RESPONSE : response, BODY : body
+          }
+        );
         return reject(error);
       }
-      // logging.log(apiReference, {
-      //     EVENT : 'Response from external server', OPTIONS: options, ERROR: error,
-      //     RESPONSE : response, BODY : body
-      //   }
-      // );
+      logging.log(apiReference, {
+          EVENT : 'Response from external server', OPTIONS: options, ERROR: error,
+          RESPONSE : response, BODY : body
+        }
+      );
       return resolve(body);
     });
   });

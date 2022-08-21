@@ -4,7 +4,7 @@
 
 const apiReferenceModule  = "startup";
 
-//const logging             = require('../logging/logging');
+const logging             = require('../logging/logging');
 const envProperties       = require('../properties/envProperties');
 const mysqlLib            = require('../database/mysqllib');
 const httpLib             = require('./httpService');
@@ -22,7 +22,7 @@ async function initializeServer() {
       server = await httpLib.startHttpServer(envProperties.port);
 
     } catch (error) {
-      //logging.logError(apiReference, {EVENT: "initializeServer", ERROR: error});
+      logging.logError(apiReference, {EVENT: "initializeServer", ERROR: error});
       throw new Error(error);
     }
 }
