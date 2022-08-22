@@ -44,3 +44,8 @@ exports.userLogin= async(req,res) => {
     console.log(error)
     }
 }
+
+exports.ping  = async(res,req) => {
+    console.log("REQUEST RECEIVED")
+    return res.send(200);
+}
