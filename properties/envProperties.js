@@ -17,14 +17,14 @@ exports.databaseSettings = {
     master: {
       host    : "localhost",
       user    : "root",
-      password: "",
-      database: "user",
+      password: "root",
+      database: "oaks",
     }
   }
 };
 
 
-exports.port = 8000;
+exports.port = 3000;
 
 function isEnv(env) {
   return process.env.NODE_ENV == env;
