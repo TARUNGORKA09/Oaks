@@ -45,7 +45,7 @@ exports.userLogin= async(req,res) => {
     }
 }
 
-exports.ping  = async(res,req) => {
+exports.ping  = async(req,res) => {
     console.log("REQUEST RECEIVED")
-    return res.send(200);
+    return res.send({status : 200});
 }
