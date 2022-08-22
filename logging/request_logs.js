@@ -23,15 +23,15 @@ Logger.requestFormat = {
   response: ':response'
 };
 
-Logger.winstonRotateObj = new winstonRotate(Logger.options);
-Logger.transports = [Logger.winstonRotateObj];
+//Logger.winstonRotateObj = new winstonRotate(Logger.options);
+//Logger.transports = [Logger.winstonRotateObj];
 //Logger.winstonLogger = new winston.Logger({ transports: Logger.transports });
 
 
 
 Logger.create = function () {
   return function (req, res, next) {
-    var logger       = Logger.winstonLogger;
+    //var logger       = Logger.winstonLogger;
     var format       = Logger.requestFormat;
     var requestEnd   = res.end
       , requestedUrl = url.parse(req.originalUrl)
@@ -86,7 +86,7 @@ Logger.create = function () {
             data[key] = data[key].replace(new RegExp(token), typeof (tokens[token]) === 'function' ? tokens[token] : replaceToken);
           }
         }
-        logger.info(data);
+        //logger.info(data);
       }
     };
     next();
