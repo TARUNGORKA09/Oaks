@@ -11,6 +11,15 @@ exports.sendOTP = async(req,res) =>{
     try {
         let phone_no = opts.phone_no;
         let username = opts.username;
+        let data = await Promise.all([
+            commonFunction.fetchDataFromTable({}, "tb_user_details", "", "fetching transaction data", {
+              username : username
+            })
+        ])
+        if(data[0][0].username == username){
+            response.message = "User already present ";
+            return res.send(response)
+        }
         let otp = Math.floor((Math.random()*1000000)+1);
         client.messages
         .create({
