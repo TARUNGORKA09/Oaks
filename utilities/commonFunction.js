@@ -235,20 +235,21 @@ exports.fetchDataFromTable = (apiReference, tableName, selectItems, event, crite
 };
 
 exports.updateDataInTable = (apiReference, tableName, event, updateObj, whereObj) => {
+  console.log(updateObj)
   return new Promise(async (resolve, reject) => {
     var sql = `UPDATE ${tableName} SET ? WHERE `;
     var args = [updateObj];
+    if (whereObj.hasOwnProperty('isVerified')) {
+      sql += " isVerified = ? AND ";
+      args.push(whereObj["isVerified"]);
+    }
     if (whereObj.hasOwnProperty('username')) {
-      sql += " request_id = ? AND ";
-      args.push(whereObj["request_id"]);
+      sql += " username = ? AND ";
+      args.push(whereObj["username"]);
     }
-    if (whereObj.hasOwnProperty('password')) {
-      sql += " transaction_id = ? AND ";
-      args.push(whereObj["transaction_id"]);
-    }
-    if (whereObj.hasOwnProperty('reference_id')) {
-      sql += " reference_id = ? AND ";
-      args.push(whereObj["reference_id"]);
+    if (whereObj.hasOwnProperty('phone_no')) {
+      sql += " phone_no = ? AND ";
+      args.push(whereObj["phone_no"]);
     }
     if (whereObj.hasOwnProperty('OrderNumber')) {
       sql += " OrderNumber = ? AND ";
@@ -335,6 +336,7 @@ exports.updateDataInTable = (apiReference, tableName, event, updateObj, whereObj
       args.push(whereObj["trackId"]);
     }
     sql += " 1=1 ";
+    console.log(args)
     try {
       await dbHandler.executeQuery(apiReference, event, sql, args);
       resolve();

@@ -45,11 +45,13 @@ function executeQuery(apiReference, event, queryString, params, noErrorlog) {
         api: "executeQuery"
       }
     }
+    console.log(queryString)
+    console.log(params)
     var query = connection.query(queryString, params, function (sqlError, sqlResult) {
       // logging.log(apiReference, {
       //   EVENT: "Executing query " + event, QUERY: query.sql, SQL_ERROR: sqlError,
       //   SQL_RESULT: sqlResult, SQL_RESULT_LENGTH: sqlResult && sqlResult.length
-      // });
+      // })
       if (sqlError || !sqlResult) {
         if (sqlError) {
           if (!noErrorlog) {

@@ -17,8 +17,8 @@ exports.databaseSettings = {
     master: {
       host    : "localhost",
       user    : "root",
-      password: "root",
-      database: "oaks",
+      password: "",
+      database: "user",
     }
   }
 };
