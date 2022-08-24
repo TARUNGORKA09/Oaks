@@ -20,7 +20,6 @@ exports.verifyOtp = async(req,res) =>{
             phone_no :phone_no
           })
       ])
-      console.log(data[0][0].otp == otp)
       if(data[0][0].otp == otp){
       await commonFunction.updateDataInTable({}, "tb_user_otp_details", "updating logs", {
           isVerified : 1

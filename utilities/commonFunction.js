@@ -235,7 +235,6 @@ exports.fetchDataFromTable = (apiReference, tableName, selectItems, event, crite
 };
 
 exports.updateDataInTable = (apiReference, tableName, event, updateObj, whereObj) => {
-  console.log(updateObj)
   return new Promise(async (resolve, reject) => {
     var sql = `UPDATE ${tableName} SET ? WHERE `;
     var args = [updateObj];
@@ -336,7 +335,6 @@ exports.updateDataInTable = (apiReference, tableName, event, updateObj, whereObj
       args.push(whereObj["trackId"]);
     }
     sql += " 1=1 ";
-    console.log(args)
     try {
       await dbHandler.executeQuery(apiReference, event, sql, args);
       resolve();
