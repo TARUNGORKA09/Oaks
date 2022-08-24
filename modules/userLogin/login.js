@@ -20,14 +20,20 @@ exports.userLogin= async(req,res) => {
             })
         ])
         opts.data = data[0];
-            if(data[0][0].username == username && data[0][0].password == password){
-                response.message = "User logged in successfully";
-                return res.send(response)
-            }else{
-                response.status = 404
-                response.message = "Invalid Login Credentials"
-                return res.send(response)
-            }
+       if(!_.isEmpty(opts.data)){
+        if(data[0][0].username == username && data[0][0].password == password){
+            response.message = "User logged in successfully";
+            return res.send(response)
+        }else{
+            response.status = 404
+            response.message = "Invalid Login Credentials"
+            return res.send(response)
+        }
+       }else{
+        response.status = 404
+            response.message = "user not registered"
+            return res.send(response)
+       }
     }catch(error){
     console.log(error)
     }
