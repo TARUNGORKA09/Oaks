@@ -14,8 +14,7 @@ const requestLogger  = require('./../logging/request_logs');
 //   require('./../libs/newrelic');
 // }
 
-//require('./parser'); //used for stripe webhook, data is required in raw format
-app.set('port', 3000);
+app.set('port', process.env.PORT);
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(function (error, req, res, next) {
@@ -28,7 +27,7 @@ app.use(logger('dev'));
 app.use(cors());
 app.use(requestLogger.create());
 
-if ('development' == app.get('env')) {
+if ('development' == process.env.NODE_ENV) {
   app.use(errorhandler());
 }
-console.log("App Environment Running at: ", app.get('env'));
+console.log("App Environment Running at: ", process.env.NODE_ENV);

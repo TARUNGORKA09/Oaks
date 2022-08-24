@@ -1,8 +1,8 @@
 
 const _ = require('underscore');
 const commonFunction = require('./../../utilities/commonFunction')
-const accountSid = "AC8411f1416a922eb3de7805c2b3acc6a3";
-const authToken = "d5a2704858b3d01f87904cc2f7671de2";
+const accountSid = process.env.SMS_ACC_ID;
+const authToken = process.env.SMS_AUTH_TOKEN;
 const client = require('twilio')(accountSid, authToken);
 
 
@@ -16,10 +16,6 @@ exports.sendOTP = async(req,res) =>{
               username : username
             })
         ])
-        if(data[0][0].username == username){
-            response.message = "User already present ";
-            return res.send(response)
-        }
         let otp = Math.floor((Math.random()*1000000)+1);
         client.messages
         .create({

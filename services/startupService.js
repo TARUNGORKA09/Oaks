@@ -18,7 +18,6 @@ async function initializeServer() {
     };
     try {
       connection = await mysqlLib.initializeConnectionPool(envProperties.databaseSettings.mysql.master);
-      //slaveConnection = await mysqlLib.initializeConnectionPool(envProperties.databaseSettings.mysql.slave);
       server = await httpLib.startHttpServer(envProperties.port);
 
     } catch (error) {
