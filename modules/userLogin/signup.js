@@ -9,11 +9,10 @@ exports.userSignUp= async(req,res) => {
         let response = {
             status : 200,
             data : {
-                username : opts.username
+                username : opts.phone_no
             }
         }
-        let password = opts.password;
-        let username = opts.username;
+        let username = opts.phone_no;
         let data = await Promise.all([
             commonFunction.fetchDataFromTable({}, "tb_user_details", "", "fetching transaction data", {
               username : username
@@ -22,10 +21,10 @@ exports.userSignUp= async(req,res) => {
         opts.data = data[0];
         if(_.isEmpty(opts.data)){
             await commonFunction.insertIntoTable({}, "tb_user_details", "inserting logs table", {
-                username: opts.username,
-                password : password,
+                username: username,
                 first_name : opts.first_name,
                 last_name : opts.last_name,
+                phone_no : opts.phone_no,
                 email : opts.email,
                 isActive : 1
               });

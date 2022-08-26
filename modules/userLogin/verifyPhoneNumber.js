@@ -1,7 +1,7 @@
 
 
 const _ = require('underscore');
-const commonFunction = require('./../../utilities/commonFunction')
+const commonFunction = require('../../utilities/commonFunction')
 
 exports.userLogin= async(req,res) => {
     const opts = req.body
@@ -9,28 +9,23 @@ exports.userLogin= async(req,res) => {
         let response = {
             status : 200,
             data : {
-                username : opts.username
+                phone_no : opts.phone_no
             }
         }
-        let password = opts.password;
-        let username = opts.username;
+        let phone_no = opts.phone_no;
         let data = await Promise.all([
             commonFunction.fetchDataFromTable({}, "tb_user_details", "", "fetching transaction data", {
-              username : username
+                username : phone_no
             })
         ])
-        opts.data = data[0];
+        opts.data = data[0][0];
        if(!_.isEmpty(opts.data)){
-        if(data[0][0].username == username && data[0][0].password == password){
-            response.message = "User logged in successfully";
-            return res.send(response)
-        }else{
-            response.status = 404
-            response.message = "Invalid Login Credentials"
+        if(data[0][0].phone_no == phone_no){
+            response.message = "phone no. verified successfully";
             return res.send(response)
         }
        }else{
-        response.status = 404
+            response.status = 404
             response.message = "user not registered"
             return res.send(response)
        }

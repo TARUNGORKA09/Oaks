@@ -29,13 +29,13 @@ exports.fetchDataFromTable = (apiReference, tableName, selectItems, event, crite
       stmt += " id = ? AND ";
       args.push(criteria["id"]);
     }
-    if (criteria.hasOwnProperty('offering_id')) {
-      stmt += " offering_id = ? AND ";
-      args.push(criteria["offering_id"]);
+    if (criteria.hasOwnProperty('product_id')) {
+      stmt += " product_id = ? AND ";
+      args.push(criteria["product_id"]);
     }
-    if (criteria.hasOwnProperty('is_active')) {
-      stmt += " is_active = ? AND ";
-      args.push(criteria["is_active"]);
+    if (criteria.hasOwnProperty('product_type')) {
+      stmt += " product_type = ? AND ";
+      args.push(criteria["product_type"]);
     }
     if (criteria.hasOwnProperty('card_type')) {
       stmt += " card_type = ? AND ";
@@ -215,6 +215,8 @@ exports.fetchDataFromTable = (apiReference, tableName, selectItems, event, crite
     }
     stmt += " 1=1 ";
 
+    console.log(stmt,args)
+
     if (order) {
       stmt += ` ORDER BY ${order.key} ${order.sort}`
     }
@@ -250,9 +252,9 @@ exports.updateDataInTable = (apiReference, tableName, event, updateObj, whereObj
       sql += " phone_no = ? AND ";
       args.push(whereObj["phone_no"]);
     }
-    if (whereObj.hasOwnProperty('OrderNumber')) {
-      sql += " OrderNumber = ? AND ";
-      args.push(whereObj["OrderNumber"]);
+    if (whereObj.hasOwnProperty('product_id')) {
+      sql += " product_id = ? AND ";
+      args.push(whereObj["product_id"]);
     }
     if (whereObj.hasOwnProperty('order_code')) {
       sql += " order_code = ? AND ";
@@ -335,6 +337,7 @@ exports.updateDataInTable = (apiReference, tableName, event, updateObj, whereObj
       args.push(whereObj["trackId"]);
     }
     sql += " 1=1 ";
+    console.log(sql)
     try {
       await dbHandler.executeQuery(apiReference, event, sql, args);
       resolve();
