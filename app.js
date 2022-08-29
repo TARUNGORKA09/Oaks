@@ -1,12 +1,14 @@
 
 const dotenv = require('dotenv');
 dotenv.config();
+const express = require('express')
 
 //require('./libs/raven');
 
-var app                           = require('express')();
+var app                           = express();
 global.app                        = app;
 
+app.use("/images",express.static("public/images"))
 
 require('./middlewares');
 require("./modules")
