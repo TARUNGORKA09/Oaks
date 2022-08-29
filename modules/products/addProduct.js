@@ -69,13 +69,12 @@ async function addProduct(req,res){
 
 
 async function uploadImg(req, res){
-    console.log(req)
     if (!req.file) {
         console.log("No file upload");
     } else {
         console.log(req.file.filename)
-        var imgsrc = 'http://127.0.0.1:5500/public/images/' + req.file.filename
-        var insertData = `UPDATE tb_product_details SET product_img = ? WHERE product_id = "ORNAMENTAL20220826130810"`
+        var imgsrc = `http://${process.env.LOCALHOST}:${process.env.PORT}/images/` + req.file.filename
+        var insertData = `UPDATE tb_product_details SET product_img = ? WHERE product_id = ${req.body.product_id}`
         connection.query(insertData, [imgsrc], (err, result) => {
             if (err) throw err
             console.log("file uploaded")
