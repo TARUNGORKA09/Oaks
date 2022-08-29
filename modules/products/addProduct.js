@@ -74,11 +74,16 @@ async function uploadImg(req, res){
     } else {
         console.log(req.file.filename)
         var imgsrc = `http://${process.env.LOCALHOST}:${process.env.PORT}/images/` + req.file.filename
-        var insertData = `UPDATE tb_product_details SET product_img = ? WHERE product_id = ${req.body.product_id}`
+        var insertData = `UPDATE tb_product_details SET product_img = ? WHERE product_id = "${req.body.product_id}"`
         connection.query(insertData, [imgsrc], (err, result) => {
             if (err) throw err
             console.log("file uploaded")
         })
+
+    let response = {
+        status : 200,
+        message : "product image added successfully"
     }
-    return res.redirect(imgsrc)
+    }
+    return res.send(response)
 }
