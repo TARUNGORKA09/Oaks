@@ -14,7 +14,8 @@ async function getCartDetails(req,res){
         }
         let data = await Promise.all([
             commonFunction.fetchDataFromTable({}, "tb_cart_details", "", "fetching transaction data", {
-              username
+              username,
+              isActive:1
             })
         ])
         if(!_.isEmpty(data[0])){
