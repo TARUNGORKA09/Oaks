@@ -4,6 +4,7 @@ const commonFunction = require('./../../utilities/commonFunction')
 const moment = require('moment');
 
 exports.addProduct = addProduct
+exports.uploadImg = uploadImg
 
 async function addProduct(req,res){
    let opts = req.body.data;
@@ -64,4 +65,21 @@ async function addProduct(req,res){
         }
         return res.send(response)
     }
+}
+
+
+async function uploadImg(req, res){
+    console.log(req)
+    if (!req.file) {
+        console.log("No file upload");
+    } else {
+        console.log(req.file.filename)
+        var imgsrc = 'http://127.0.0.1:5500/public/images/' + req.file.filename
+        var insertData = `UPDATE tb_product_details SET product_img = ? WHERE product_id = "ORNAMENTAL20220826130810"`
+        connection.query(insertData, [imgsrc], (err, result) => {
+            if (err) throw err
+            console.log("file uploaded")
+        })
+    }
+    return res.redirect(imgsrc)
 }

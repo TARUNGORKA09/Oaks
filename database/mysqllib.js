@@ -11,11 +11,14 @@ exports.initializeConnectionPool = initializeConnectionPool;
 exports.executeSlaveQuery        = executeSlaveQuery;
 exports.executeQuery             = executeQuery;
 
+
 function initializeConnectionPool(dbConfig) {
   return new Promise((resolve, reject) => {
     console.log('CALLING INITIALIZE POOL');
     var numConnectionsInPool = 0;
     var connection = mysql.createPool(dbConfig);
+
+    global.connection = connection
     connection.on('connection', function (connection) {
       numConnectionsInPool++;
       console.log('NUMBER OF CONNECTION IN POOL : ', numConnectionsInPool);

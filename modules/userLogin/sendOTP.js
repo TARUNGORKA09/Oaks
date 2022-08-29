@@ -16,6 +16,7 @@ exports.sendOTP = async(req,res) =>{
               username : username
             })
         ])
+        // TODO need to check if phone number already exist or not.
         let otp = Math.floor((Math.random()*1000000)+1);
         client.messages
         .create({
