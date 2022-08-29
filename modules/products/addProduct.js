@@ -69,6 +69,7 @@ async function addProduct(req,res){
 
 
 async function uploadImg(req, res){
+    let response;
     if (!req.file) {
         console.log("No file upload");
     } else {
@@ -80,7 +81,7 @@ async function uploadImg(req, res){
             console.log("file uploaded")
         })
 
-    let response = {
+     response = {
         status : 200,
         message : "product image added successfully"
     }
