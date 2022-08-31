@@ -9,6 +9,7 @@ var app                           = express();
 global.app                        = app;
 
 app.use("/images",express.static("public/images"))
+app.use("/payment",express.static("public/html"))
 
 require('./middlewares');
 require("./modules")

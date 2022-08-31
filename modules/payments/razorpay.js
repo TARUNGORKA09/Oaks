@@ -86,8 +86,30 @@ async function getTransactionDetails(req,res){
     console.log(opts)
     console.log(req.body)
     try {
-        
+        let transactionId = opts.razorpay_payment_id;
+        let order_id = opts.order_id;
+        let status = opts.razorpay_payment_link_status;
+        if(status == "paid"){
+            await commonFunction.updateDataInTable({},"tb_order_details","updating order details",{
+                transaction_Id : transactionId,
+                isPaymentDone : 1
+            },{
+                order_id
+            })
+        }else{
+            await commonFunction.updateDataInTable({},"tb_order_details","updating order details",{
+                transaction_Id : transactionId,
+                isPaymentDone : 0
+            },{
+                order_id
+            })
+
+        let url = `http://${process.env.LOCALHOST}:${process.env.PORT}/payment/failed.html`
+        return res.redirect(url)
+        }
+        let url = `http://${process.env.LOCALHOST}:${process.env.PORT}/payment/success.html`
+        return res.redirect(url)
     } catch (error) {
-        
+        let url = `http://${process.env.LOCALHOST}:${process.env.PORT}/payment/failed.html`
     }
 }
