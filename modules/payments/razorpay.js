@@ -37,7 +37,7 @@ async function getRedirectUrl(req,res){
                   "email": true
                 },
                 "reminder_enable": true,
-                "callback_url": `http://${process.env.LOCALHOST}:${process.env.PORT}/product/getTransactionDetails?order_id=${order_no}`,
+                "callback_url": `http://${process.env.LOCALHOST}:${process.env.PORT}/payment/getTransactionDetails?order_id=${order_no}`,
                 "callback_method": "get"
               }
             let options = {
