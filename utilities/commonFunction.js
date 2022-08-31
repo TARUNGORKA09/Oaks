@@ -256,33 +256,33 @@ exports.updateDataInTable = (apiReference, tableName, event, updateObj, whereObj
       sql += " product_id = ? AND ";
       args.push(whereObj["product_id"]);
     }
-    if (whereObj.hasOwnProperty('order_code')) {
-      sql += " order_code = ? AND ";
-      args.push(whereObj["order_code"]);
+    if (whereObj.hasOwnProperty('order_id')) {
+      sql += " order_id = ? AND ";
+      args.push(whereObj["order_id"]);
     }
-    if (whereObj.hasOwnProperty('card_id')) {
-      sql += " card_id = ? AND ";
-      args.push(whereObj["card_id"]);
+    if (whereObj.hasOwnProperty('razorpay_payment_link')) {
+      sql += " razorpay_payment_link = ? AND ";
+      args.push(whereObj["razorpay_payment_link"]);
     }
-    if (whereObj.hasOwnProperty('user_id')) {
-      sql += " user_id = ? AND ";
-      args.push(whereObj["user_id"]);
+    if (whereObj.hasOwnProperty('razorpay_payment_link_id')) {
+      sql += " razorpay_payment_link_id = ? AND ";
+      args.push(whereObj["razorpay_payment_link_id"]);
     }
-    if (whereObj.hasOwnProperty('form_id')) {
-      sql += " form_id = ? AND ";
-      args.push(whereObj["form_id"]);
+    if (whereObj.hasOwnProperty('isPaymentDone')) {
+      sql += " isPaymentDone = ? AND ";
+      args.push(whereObj["isPaymentDone"]);
     }
-    if (whereObj.hasOwnProperty('vendor_id')) {
-      sql += " vendor_id = ? AND ";
-      args.push(whereObj["vendor_id"]);
+    if (whereObj.hasOwnProperty('amount')) {
+      sql += " amount = ? AND ";
+      args.push(whereObj["amount"]);
     }
-    if (whereObj.hasOwnProperty('id')) {
-      sql += " id = ? AND ";
-      args.push(whereObj["id"]);
+    if (whereObj.hasOwnProperty('email')) {
+      sql += " email = ? AND ";
+      args.push(whereObj["email"]);
     }
-    if (whereObj.hasOwnProperty('offering_id')) {
-      sql += " offering_id = ? AND ";
-      args.push(whereObj["offering_id"]);
+    if (whereObj.hasOwnProperty('transaction_id')) {
+      sql += " transaction_id = ? AND ";
+      args.push(whereObj["transaction_id"]);
     }
     if (whereObj.hasOwnProperty('card_token')) {
       sql += " card_token = ? AND ";

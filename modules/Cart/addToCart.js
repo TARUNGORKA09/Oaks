@@ -28,6 +28,7 @@ async function addProduct(req,res){
             let product_quantity = data[0][0].product_quantity 
             await commonFunction.updateDataInTable({}, "tb_cart_details", "inserting cart table", {
                 product_quantity: product_quantity + 1,
+                isActive : 1
             },{
                 username,
                 product_id, 
@@ -38,6 +39,7 @@ async function addProduct(req,res){
             product_id,
             product_price : productDetail.product_price,
             product_quantity : 1,
+            isActive : 1
         });
     }
         response.message = "Product added successfully !!"
