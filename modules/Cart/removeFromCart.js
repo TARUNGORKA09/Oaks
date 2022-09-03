@@ -20,12 +20,32 @@ async function removeFromCart(req,res){
         ])
         if(!_.isEmpty(data[0][0])){
             product_quantity = data[0][0].product_quantity
-            await commonFunction.updateDataInTable({},"tb_cart_details","updating cart details",{
-                product_quantity: product_quantity - 1,
-            },{
-                username,
-                product_id
-            })
+            quantity = product_quantity - 1
+            console.log(quantity)
+            if(quantity>0){
+                await commonFunction.updateDataInTable({},"tb_cart_details","updating cart details",{
+                    product_quantity : quantity
+                },{
+                    username,
+                    product_id,
+                })
+            }if(quantity==0){
+                await commonFunction.updateDataInTable({},"tb_cart_details","updating cart details",{
+                    product_quantity : quantity,
+                    isActive :0
+                },{
+                    username,
+                    product_id,
+                })
+            }else{
+                await commonFunction.updateDataInTable({},"tb_cart_details","updating cart details",{
+                    isActive : 0
+                },{
+                    username,
+                    product_id
+                })
+            }
+            
         }else{
             await commonFunction.updateDataInTable({},"tb_cart_details","updating cart details",{
                 isActive : 0
