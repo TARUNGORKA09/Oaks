@@ -21,15 +21,23 @@ async function getCartDetails(req,res){
         if(!_.isEmpty(data[0])){
             let totalCartValue = 0
             let count = 0
-            data[0].forEach((item) => {
-                totalCartValue = totalCartValue + item.product_price * item.product_quantity
+            for (let i = 0; i < data[0].length; i++) {
+                let refData = await getProductDetails(data[0][i].product_id);
+                data[0][i].product_img = refData.product_img;
+                data[0][i].product_type = refData.product_type;
+                data[0][i].product_name = refData.product_name;
+                data[0][i].product_mrp = refData.product_mrp;
+                data[0][i].product_discount = refData.product_discount;
+                data[0][i].product_img = refData.product_img;
+                data[0][i].product_stock = refData.product_quantity
+                totalCartValue = totalCartValue + data[0][i].product_price * data[0][i].product_quantity
                 count+=1
-            })
+              } 
             response.totalNoOfProductsInCart = count
             response.totalCartValue = totalCartValue
         }else{
         throw new Error("Sorry!! the cart is empty !!")
-    }
+        }
         response.data = data[0]
         return res.send(response)
     } catch(error) {
