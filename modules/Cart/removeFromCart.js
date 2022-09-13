@@ -29,7 +29,7 @@ async function removeFromCart(req,res){
                     username,
                     product_id,
                 })
-            }if(quantity==0){
+            }else if(quantity==0){
                 await commonFunction.updateDataInTable({},"tb_cart_details","updating cart details",{
                     product_quantity : quantity,
                     isActive :0
