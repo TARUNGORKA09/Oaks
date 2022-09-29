@@ -3,11 +3,52 @@ const commonFunction = require('./../../utilities/commonFunction')
 const moment = require('moment');
 
 const httpService = require('../../services/httpService');
-const { json } = require("body-parser");
 
 
 exports.getRedirectUrl = getRedirectUrl
 exports.getTransactionDetails = getTransactionDetails
+exports.getOrderId = getOrderId
+
+async function getOrderId(req,res){
+    let opts = req.body
+    try {
+        let amount = opts.amount;
+        let string = process.env.RAZORPAY_KEY_ID + ":" + process.env.RAZORPAY_KEY_SECRET
+        let token = Buffer.from(string).toString("base64");
+
+        let time = moment(new Date()).format('YYYYMMDDHHMMSS')
+        let body = {
+            "amount" : amount,
+            "currency" : "INR",
+            "receipt" : `ORDER_${time}`
+        }
+        let options = {
+            uri : "https://api.razorpay.com/v1/orders",
+            method : "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization": `Basic ${token}`,
+              },
+            body :JSON.stringify(body)
+        };
+        let razorpayResponse = await httpService.sendHttpRequest({}, options);
+        console.log(razorpayResponse)
+        try{razorpayResponse = JSON.parse(razorpayResponse)}catch(e){}
+        let response = {
+            status : 200,
+            order_id : razorpayResponse.id
+          }
+          return res.send(response)
+
+    }catch(e){
+        let response = {
+            status : 400,
+            payment_url : null,
+            message : "Oops!!! Something went wrong"
+          }
+          return res.send(response)
+    }
+}
 
 async function getRedirectUrl(req,res){
         let opts = req.body
@@ -25,7 +66,6 @@ async function getRedirectUrl(req,res){
             let body = {
                 "amount": amount*100,
                 "currency": "INR",
-                "reference_id": order_no,
                 "description": `Payment for ${order_no}`,
                 "customer": {
                   "name": `${refData[0].first_name} ${refData[0].last_name}`,
@@ -53,6 +93,7 @@ async function getRedirectUrl(req,res){
                 }
               };
               let razorpayResponse = await httpService.sendHttpRequest({}, options);
+              console.log(razorpayResponse)
               try{razorpayResponse = JSON.parse(razorpayResponse)}catch(e){}
               let url = razorpayResponse.short_url;
               let response = {
