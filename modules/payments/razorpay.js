@@ -8,6 +8,29 @@ const httpService = require('../../services/httpService');
 exports.getRedirectUrl = getRedirectUrl
 exports.getTransactionDetails = getTransactionDetails
 exports.getOrderId = getOrderId
+exports.getRazorpaykeys = getRazorpaykeys
+
+async function getRazorpaykeys(req,res){
+    try {
+        let key_id =  process.env.RAZORPAY_KEY_ID;
+        let key_secret =  process.env.RAZORPAY_KEY_ID;
+
+        let response = {
+            status : 200,
+            key_id,
+            key_secret
+        }
+
+        res.send(response)
+    } catch (error) {
+        let response = {
+            status : 400,
+            payment_url : null,
+            message : "Oops!!! Something went wrong"
+          }
+          return res.send(response)
+    }
+}
 
 async function getOrderId(req,res){
     let opts = req.body
