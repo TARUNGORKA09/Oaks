@@ -208,24 +208,24 @@ async function getTransactionDetails(req,res){
             console.log("&&&&&&&&&&&&&"+data[0][0].product_id)
             if(!_.isEmpty(data[0])){
                 for (let i = 0; i < data[0].length; i++) {
-                    let refData = await Promise.all([cartDetails.getProductDetails(data[0][i].product_id)]);
-                    console.log(refData[0][0])
+                    let refData = cartDetails.getProductDetails(data[0][i].product_id);
+                    console.log(refData)
                     await commonFunction.insertIntoTable({}, "tb_order_details", "inserting product table", {
                         order_id,
                         username,
                         order_time,
-                        product_id : refData[0][0].product_id,
-                        product_type : refData[0][0].product_type,
-                        product_price :refData[0][0].product_price,
-                        product_name : refData[0][0].product_name,
-                        product_description : refData[0][0].product_description,
-                        product_quantity : refData[0][0].product_quantity,
-                        product_mrp : refData[0][0].product_mrp,
-                        product_discount : refData[0][0].product_discount
+                        product_id : refData.product_id,
+                        product_type : refData.product_type,
+                        product_price :refData.product_price,
+                        product_name : refData.product_name,
+                        product_description : refData.product_description,
+                        product_quantity : refData.product_quantity,
+                        product_mrp : refData.product_mrp,
+                        product_discount : refData.product_discount
                   })
                   let data = await 
                     Promise.all([commonFunction.fetchDataFromTable({}, "tb_cart_details", "", "fetching transaction data", {
-                      product_id : refData[0][0].product_id,
+                      product_id : refData.product_id,
                       username
                     })
                 ])
@@ -235,7 +235,7 @@ async function getTransactionDetails(req,res){
                             isActive : 0
                         },{
                             username,
-                            product_id:refData[0][0].product_id,
+                            product_id:refData.product_id,
                         })
                 }else {
                     throw new Error("Invalid request");
