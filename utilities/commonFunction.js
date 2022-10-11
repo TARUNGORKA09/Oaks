@@ -240,9 +240,9 @@ exports.updateDataInTable = (apiReference, tableName, event, updateObj, whereObj
   return new Promise(async (resolve, reject) => {
     var sql = `UPDATE ${tableName} SET ? WHERE `;
     var args = [updateObj];
-    if (whereObj.hasOwnProperty('isVerified')) {
-      sql += " isVerified = ? AND ";
-      args.push(whereObj["isVerified"]);
+    if (whereObj.hasOwnProperty('isActive')) {
+      sql += " isActive = ? AND ";
+      args.push(whereObj["isActive"]);
     }
     if (whereObj.hasOwnProperty('username')) {
       sql += " username = ? AND ";
