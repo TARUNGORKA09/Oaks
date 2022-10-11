@@ -39,7 +39,7 @@ async function getOrderId(req,res){
     let opts = req.body
     try {
         let amount = opts.amount;
-        let username = username;
+        let username = opts.username;
         let string = process.env.RAZORPAY_KEY_ID + ":" + process.env.RAZORPAY_KEY_SECRET
         let token = Buffer.from(string).toString("base64");
 
