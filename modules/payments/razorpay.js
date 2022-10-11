@@ -13,8 +13,6 @@ exports.getRazorpaykeys = getRazorpaykeys
 
 async function getRazorpaykeys(req,res){
     try {
-        let time = moment(new Date()).format('YYYYMMDDHHMMSS')
-        let order_no = `ORDER_${time}`
         let username = req.query.username;
         let key_id =  process.env.RAZORPAY_KEY_ID;
         let key_secret =  process.env.RAZORPAY_KEY_ID;
@@ -43,10 +41,12 @@ async function getOrderId(req,res){
     let opts = req.body
     try {
         let amount = opts.amount;
+        let username = username;
         let string = process.env.RAZORPAY_KEY_ID + ":" + process.env.RAZORPAY_KEY_SECRET
         let token = Buffer.from(string).toString("base64");
 
         let time = moment(new Date()).format('YYYYMMDDHHMMSS')
+        let order_no = `ORDER_${time}`
         let body = {
             "amount" : amount,
             "currency" : "INR",
@@ -64,9 +64,23 @@ async function getOrderId(req,res){
         let razorpayResponse = await httpService.sendHttpRequest({}, options);
         console.log(razorpayResponse)
         try{razorpayResponse = JSON.parse(razorpayResponse)}catch(e){}
+
+        let refData = await commonFunction.fetchDataFromTable({},"tb_user_details","","Fetching data from user details",{
+            username
+        })
+
+        await commonFunction.insertIntoTable({},"tb_payment_details","updating order table",{
+            order_id : order_no,
+            username,
+            email : refData[0].email,
+            phone_no : refData[0].phone_no,
+            isPaymentDone : 0,
+            amount
+          })
         let response = {
             status : 200,
-            order_id : razorpayResponse.id
+            order_id : razorpayResponse.id,
+            order_no
           }
           return res.send(response)
 
@@ -229,7 +243,7 @@ async function getTransactionDetails(req,res){
             },{
                 order_id
             })
-            return res.send(400)
+            return res.send(200)
         }
         return res.send(200)
     } catch (error) {
