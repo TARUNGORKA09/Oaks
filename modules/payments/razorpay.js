@@ -157,10 +157,10 @@ async function getTransactionDetails(req,res){
     console.log(opts)
     console.log(req.body)
     try {
-        let transactionId = opts.razorpay_payment_id;
+        let transactionId = req.body.razorpay_payment_id;
         let order_id = opts.order_id;
         let username = opts.username;
-        let status = opts.razorpay_payment_link_status;
+        let status = req.body.razorpay_payment_link_status;
        
 
         if(status == "paid"){
