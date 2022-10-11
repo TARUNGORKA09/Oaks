@@ -4,15 +4,14 @@ const commonFunction = require('./../../utilities/commonFunction')
 exports.getOrderDetails = getOrderDetails
 
 async function getOrderDetails(req,res){
-    let opts = req.query;
+    let opts = req.body;
     try {
         let response = {
             status : 200
         }
-        console.log(opts.type)
         let data = await Promise.all([
             commonFunction.fetchDataFromTable({}, "tb_order_details", "", "fetching transaction data", {
-              product_type: opts.type
+              username : opts.username
             })
         ])
         if(!_.isEmpty(data[0])){
