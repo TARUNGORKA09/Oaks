@@ -212,6 +212,13 @@ async function getTransactionDetails(req,res){
                     console.log(data[0][i].product_id)
                     let refData = await cartDetails.getProductDetails(data[0][i].product_id);
                     console.log(refData)
+                    let cartData = await 
+                    Promise.all([commonFunction.fetchDataFromTable({}, "tb_cart_details", "", "fetching transaction data", {
+                      product_id : refData.product_id,
+                      username
+                    })
+                ])
+                console.log(cartData[0][0].product_quantity)
                     await commonFunction.insertIntoTable({}, "tb_order_details", "inserting product table", {
                         order_id,
                         username,
@@ -220,16 +227,11 @@ async function getTransactionDetails(req,res){
                         product_price :refData.product_price,
                         product_name : refData.product_name,
                         product_description : refData.product_description,
-                        product_quantity : refData.product_quantity,
+                        product_quantity : cartData[0][0].product_quantity,
                         product_mrp : refData.product_mrp,
                         product_discount : refData.product_discount
                   })
-                  let cartData = await 
-                    Promise.all([commonFunction.fetchDataFromTable({}, "tb_cart_details", "", "fetching transaction data", {
-                      product_id : refData.product_id,
-                      username
-                    })
-                ])
+                  
                 if(!_.isEmpty(cartData[0])){
                         await commonFunction.updateDataInTable({},"tb_cart_details","updating cart details",{
                             product_quantity : 0,
