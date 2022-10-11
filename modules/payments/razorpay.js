@@ -206,6 +206,7 @@ async function getTransactionDetails(req,res){
 
             console.log("&&&&&&&&&&&&&"+data[0][0])
             console.log("&&&&&&&&&&&&&"+data[0][0].product_id)
+            console.log("******************** " + data[0].length)
             if(!_.isEmpty(data[0])){
                 for (let i = 0; i < data[0].length; i++) {
                     let refData = cartDetails.getProductDetails(data[0][i].product_id);
@@ -213,7 +214,6 @@ async function getTransactionDetails(req,res){
                     await commonFunction.insertIntoTable({}, "tb_order_details", "inserting product table", {
                         order_id,
                         username,
-                        order_time,
                         product_id : refData.product_id,
                         product_type : refData.product_type,
                         product_price :refData.product_price,
@@ -255,6 +255,7 @@ async function getTransactionDetails(req,res){
         }
         return res.send(200)
     } catch (error) {
+        console.error(error)
         res.send(400)
     }
 }
