@@ -15,6 +15,7 @@ async function getRazorpaykeys(req,res){
     try {
         let time = moment(new Date()).format('YYYYMMDDHHMMSS')
         let order_no = `ORDER_${time}`
+        let username = opt.username;
         let key_id =  process.env.RAZORPAY_KEY_ID;
         let key_secret =  process.env.RAZORPAY_KEY_ID;
         let callbackUrl = `http://${process.env.LOCALHOST}:${process.env.PORT}/payment/getTransactionDetails?order_id=${order_no}&username=${username}`
@@ -23,7 +24,8 @@ async function getRazorpaykeys(req,res){
             key_id,
             key_secret,
             callbackUrl,
-            order_no
+            order_no,
+            username
         }
 
         res.send(response)
