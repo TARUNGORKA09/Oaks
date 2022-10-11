@@ -153,17 +153,20 @@ async function getRedirectUrl(req,res){
 
 
 async function getTransactionDetails(req,res){
-    let opts = req.query;
+    let opts = req.body;
     console.log(opts)
     console.log(req.body)
     try {
         let order_id = opts.order_id;
         let username = opts.username;
+        let status = opts.status;
+        let payment_id = opts.payment_id;
        
 
-        if(req.body.razorpay_payment_id){
+        if(status == "paid"){
+
             await commonFunction.updateDataInTable({},"tb_payment_details","updating order details",{
-                transaction_Id : req.body.razorpay_payment_id,
+                transaction_Id : payment_id,
                 isPaymentDone : 1
             },{
                 order_id
