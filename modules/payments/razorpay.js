@@ -223,13 +223,13 @@ async function getTransactionDetails(req,res){
                         product_mrp : refData.product_mrp,
                         product_discount : refData.product_discount
                   })
-                  let data = await 
+                  let cartData = await 
                     Promise.all([commonFunction.fetchDataFromTable({}, "tb_cart_details", "", "fetching transaction data", {
                       product_id : refData.product_id,
                       username
                     })
                 ])
-                if(!_.isEmpty(data[0])){
+                if(!_.isEmpty(cartData[0])){
                         await commonFunction.updateDataInTable({},"tb_cart_details","updating cart details",{
                             product_quantity : 0,
                             isActive : 0
