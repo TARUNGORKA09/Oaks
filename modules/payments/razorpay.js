@@ -201,6 +201,11 @@ async function getTransactionDetails(req,res){
                 })
             ])
             console.log(data)
+
+            console.log("++++++++"+data[0])
+
+            console.log("&&&&&&&&&&&&&"+data[0][0])
+            console.log("&&&&&&&&&&&&&"+data[0][0].product_id)
             if(!_.isEmpty(data[0])){
                 for (let i = 0; i < data[0].length; i++) {
                     let refData = await Promise.all([cartDetails.getProductDetails(data[0][i].product_id)]);
