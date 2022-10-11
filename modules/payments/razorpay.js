@@ -189,17 +189,20 @@ async function getTransactionDetails(req,res){
                   order_id,
                 })
             let order_time = orderData.created_at;
+
+            console.log("++++++++"+orderData)
             
 
-            let data = await Promise.all([
+            let data = 
                 commonFunction.fetchDataFromTable({}, "tb_cart_details", "", "fetching transaction data", {
                   username,
                   isActive:1
                 })
-            ])
-            if(!_.isEmpty(data[0])){
-                for (let i = 0; i < data[0].length; i++) {
-                    let refData = await cartDetails.getProductDetails(data[0][i].product_id);
+            console.log("$$$$$$$$"+data[0])
+            console.log("*********"+data)
+            if(!_.isEmpty(data)){
+                for (let i = 0; i < data.length; i++) {
+                    let refData = await cartDetails.getProductDetails(data[i].product_id);
                     await commonFunction.insertIntoTable({}, "tb_order_details", "inserting product table", {
                         order_id,
                         username,
@@ -213,19 +216,18 @@ async function getTransactionDetails(req,res){
                         product_mrp : refData.product_mrp,
                         product_discount : refData.product_discount
                   })
-                  let data = await Promise.all([
+                  let data = await 
                     commonFunction.fetchDataFromTable({}, "tb_cart_details", "", "fetching transaction data", {
                       product_id : refData.product_id,
                       username
                     })
-                ])
-                if(!_.isEmpty(data[0][0])){
+                if(!_.isEmpty(data)){
                         await commonFunction.updateDataInTable({},"tb_cart_details","updating cart details",{
                             product_quantity : 0,
                             isActive : 0
                         },{
                             username,
-                            product_id,
+                            product_id:refData.product_id,
                         })
                 }else {
                     throw new Error("Invalid request");
