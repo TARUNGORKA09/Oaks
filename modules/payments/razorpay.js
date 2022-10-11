@@ -184,17 +184,17 @@ async function getTransactionDetails(req,res){
                 order_id
             })
 
-            let orderData = await 
-                commonFunction.fetchDataFromTable({}, "tb_payment_details", "", "fetching transaction data", {
-                  order_id,
-                })
-            let order_time = orderData.created_at;
+            // let orderData = await 
+            //      commonFunction.fetchDataFromTable({}, "tb_payment_details", "", "fetching transaction data", {
+            //       order_id,
+            //     })
+            // let order_time = orderData.created_at;
 
-            console.log("++++++++"+orderData)
+            // console.log("++++++++"+orderData)
             
 
             let data = 
-                commonFunction.fetchDataFromTable({}, "tb_cart_details", "", "fetching transaction data", {
+                await commonFunction.fetchDataFromTable({}, "tb_cart_details", "", "fetching transaction data", {
                   username,
                   isActive:1
                 })
