@@ -157,15 +157,13 @@ async function getTransactionDetails(req,res){
     console.log(opts)
     console.log(req.body)
     try {
-        let transactionId = req.body.razorpay_payment_id;
         let order_id = opts.order_id;
         let username = opts.username;
-        let status = req.body.razorpay_payment_link_status;
        
 
-        if(status == "paid"){
+        if(req.body.razorpay_payment_id){
             await commonFunction.updateDataInTable({},"tb_payment_details","updating order details",{
-                transaction_Id : transactionId,
+                transaction_Id : req.body.razorpay_payment_id,
                 isPaymentDone : 1
             },{
                 order_id
@@ -206,7 +204,7 @@ async function getTransactionDetails(req,res){
         else
         {
             await commonFunction.updateDataInTable({},"tb_payment_details","updating order details",{
-                transaction_Id : transactionId,
+                transaction_Id : req.body.error.metadata.payment_id,
                 isPaymentDone : 0
             },{
                 order_id
