@@ -18,6 +18,7 @@ async function getCartDetails(req,res){
               isActive:1
             })
         ])
+        console.log(data)
         if(!_.isEmpty(data[0])){
             let totalCartValue = 0
             let count = 0

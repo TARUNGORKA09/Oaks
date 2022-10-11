@@ -200,8 +200,7 @@ async function getTransactionDetails(req,res){
                   isActive:1
                 })
             ])
-            console.log("$$$$$$$$"+data[0])
-            console.log("*********"+data)
+            console.log(data)
             if(!_.isEmpty(data[0])){
                 for (let i = 0; i < data[0].length; i++) {
                     let refData = await cartDetails.getProductDetails(data[0][i].product_id);

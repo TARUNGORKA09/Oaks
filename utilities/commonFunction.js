@@ -57,9 +57,9 @@ exports.fetchDataFromTable = (apiReference, tableName, selectItems, event, crite
       stmt += " form_id = ? AND ";
       args.push(criteria["form_id"]);
     }
-    if (criteria.hasOwnProperty('store_id')) {
-      stmt += " store_id = ? AND ";
-      args.push(criteria["store_id"]);
+    if (criteria.hasOwnProperty('isActive')) {
+      stmt += " isActive = ? AND ";
+      args.push(criteria["isActive"]);
     }
     if (criteria.hasOwnProperty('transaction_id')) {
       stmt += " transaction_id = ? AND ";
