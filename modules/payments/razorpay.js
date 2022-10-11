@@ -21,7 +21,6 @@ async function getRazorpaykeys(req,res){
             status : 200,
             key_id,
             key_secret,
-            callbackUrl,
             username
         }
 
