@@ -1,6 +1,7 @@
 const _ = require("underscore")
 const commonFunction = require('./../../utilities/commonFunction')
 const moment = require('moment');
+const cartDetails = require('../Cart/getCartDetails')
 
 const httpService = require('../../services/httpService');
 
@@ -104,7 +105,7 @@ async function getRedirectUrl(req,res){
                   "email": true
                 },
                 "reminder_enable": true,
-                "callback_url": `http://${process.env.LOCALHOST}:${process.env.PORT}/payment/getTransactionDetails?order_id=${order_no}`,
+                "callback_url": `http://${process.env.LOCALHOST}:${process.env.PORT}/payment/getTransactionDetails?order_id=${order_no}&username=${username}`,
                 "callback_method": "get"
               }
             let options = {
@@ -127,7 +128,7 @@ async function getRedirectUrl(req,res){
                 status : 200,
                 payment_url : url
               }
-              await commonFunction.insertIntoTable({},"tb_order_details","updating order table",{
+              await commonFunction.insertIntoTable({},"tb_payment_details","updating order table",{
                 order_id : order_no,
                 username,
                 razorpay_payment_link_id : razorpayResponse.id,
@@ -156,28 +157,62 @@ async function getTransactionDetails(req,res){
     try {
         let transactionId = opts.razorpay_payment_id;
         let order_id = opts.order_id;
+        let username = opts.username;
         let status = opts.razorpay_payment_link_status;
+       
+
         if(status == "paid"){
-            await commonFunction.updateDataInTable({},"tb_order_details","updating order details",{
+            await commonFunction.updateDataInTable({},"tb_payment_details","updating order details",{
                 transaction_Id : transactionId,
                 isPaymentDone : 1
             },{
                 order_id
             })
-        }else{
-            await commonFunction.updateDataInTable({},"tb_order_details","updating order details",{
+
+            let orderData = await 
+                commonFunction.fetchDataFromTable({}, "tb_payment_details", "", "fetching transaction data", {
+                  order_id,
+                })
+            let order_time = orderData.created_at;
+            
+
+            let data = await Promise.all([
+                commonFunction.fetchDataFromTable({}, "tb_cart_details", "", "fetching transaction data", {
+                  username,
+                  isActive:1
+                })
+            ])
+            if(!_.isEmpty(data[0])){
+                for (let i = 0; i < data[0].length; i++) {
+                    let refData = await cartDetails.getProductDetails(data[0][i].product_id);
+                    await commonFunction.insertIntoTable({}, "tb_order_details", "inserting product table", {
+                        order_id,
+                        username,
+                        order_time,
+                        product_id : refData.product_id,
+                        product_type : refData.product_type,
+                        product_price :refData.product_price,
+                        product_name : refData.product_name,
+                        product_description : refData.product_description,
+                        product_quantity : refData.product_quantity,
+                        product_mrp : refData.product_mrp,
+                        product_discount : refData.product_discount
+                  })
+            }
+        }
+        }
+        else
+        {
+            await commonFunction.updateDataInTable({},"tb_payment_details","updating order details",{
                 transaction_Id : transactionId,
                 isPaymentDone : 0
             },{
                 order_id
             })
-
-        let url = `http://${process.env.LOCALHOST}:${process.env.PORT}/payment/failed.html`
-        return res.redirect(url)
+            return res.send(400)
         }
-        let url = `http://${process.env.LOCALHOST}:${process.env.PORT}/payment/success.html`
-        return res.redirect(url)
+        return res.send(200)
     } catch (error) {
-        let url = `http://${process.env.LOCALHOST}:${process.env.PORT}/payment/failed.html`
+        res.send(400)
     }
 }
