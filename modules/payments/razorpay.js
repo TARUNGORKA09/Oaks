@@ -249,7 +249,7 @@ async function getTransactionDetails(req,res){
         else
         {
             await commonFunction.updateDataInTable({},"tb_payment_details","updating order details",{
-                transaction_Id : req.body.error.metadata.payment_id,
+                transaction_Id : payment_id,
                 isPaymentDone : 0
             },{
                 order_id
