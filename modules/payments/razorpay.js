@@ -209,7 +209,8 @@ async function getTransactionDetails(req,res){
             console.log("******************** " + data[0].length)
             if(!_.isEmpty(data[0])){
                 for (let i = 0; i < data[0].length; i++) {
-                    let refData = cartDetails.getProductDetails(data[0][i].product_id);
+                    console.log(data[0][i].product_id)
+                    let refData = await cartDetails.getProductDetails(data[0][i].product_id);
                     console.log(refData)
                     await commonFunction.insertIntoTable({}, "tb_order_details", "inserting product table", {
                         order_id,
