@@ -229,7 +229,8 @@ async function getTransactionDetails(req,res){
                         product_description : refData.product_description,
                         product_quantity : cartData[0][0].product_quantity,
                         product_mrp : refData.product_mrp,
-                        product_discount : refData.product_discount
+                        product_discount : refData.product_discount,
+                        product_img : refData.product_img
                   })
                   
                 if(!_.isEmpty(cartData[0])){
