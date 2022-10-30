@@ -1,15 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-      <title>How to store image path in MySQL database using Node js - Tutsmake.com</title>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-    </head>
-    <body>
-      <h1>How to store image path in MySQL database using Node js - Tutsmake.com</h1>
-      <form action="/post" enctype="multipart/form-data" method="post">
-        <input type="file" name="image" accept='image/*' >
-        <input type="submit" value="Upload">
-      </form>  
-    </body>
-</html>
+
+
+<Html>  
+  <head>   
+  <title>  
+  Registration Page  
+  </title>  
+  </head>  
+  <style>
+#grad1 {
+  height: 200px;
+  background-color: red; /* For browsers that do not support gradients */
+  background-image: linear-gradient(red, yellow);
+}
+</style>
+  <body id="grad1">  
+  <br>  
+  <br>  
+  <form action="http://34.125.149.247:3000/product/addProduct" method="post">  
+    
+  <label> Product Name </label>         
+  <input type="text" name="product_name" size="15"/> <br> <br>  
+  <label> Product Description </label>     
+  <input type="text" name="product_description" size="100"/> <br> <br>  
+  <label> Product Price: </label>         
+  <input type="text" name="product_price" size="15"/> <br> <br>  
+  <label> Product MRP </label>         
+  <input type="text" name="product_mrp" size="15"/> <br> <br>  
+  <label> Product Quantity </label>     
+  <input type="text" name="product_quantity" size="100"/> <br> <br>  
+    
+  <label name="product_type">   
+  Product Type :  
+  </label>   
+  <select name="product_type" >  
+  <option value="HERBS">HERBS</option>  
+  <option value="ORNAMENTAL">ORNAMENTAL</option>  
+  <option value="CREEPERS">CREEPERS</option>  
+  <option value="CLIMBERS">CLIMBERS</option>  
+  <option value="TREES">TREES</option>  
+  <option value="FRUITS">FRUITS</option>  
+  <option value="SHERBS">SHERBS</option>  
+  </select><br><br>
+  <input type="submit" value="Submit">
+  </form>  
+  </body>  
+  </html>  

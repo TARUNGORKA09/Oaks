@@ -17,7 +17,7 @@ async function addProduct(req,res){
         let product_description = opts.product_description;
         let product_quantity = opts.product_quantity;
         let product_mrp = opts.product_mrp;
-        let product_discount =  opts.product_price/opts.product_mrp * 100;
+        let product_discount = 100 - (opts.product_price/opts.product_mrp * 100);
 
         let response = {
             status : 200
